@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  frequency: MyString
+  type: 
+  lastRun: 2014-02-13 20:25:40
+  user_id: 
+
+two:
+  frequency: MyString
+  type: 
+  lastRun: 2014-02-13 20:25:40
+  user_id: 

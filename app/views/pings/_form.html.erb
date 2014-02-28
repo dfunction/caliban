@@ -1,0 +1,34 @@
+<%= form_for(@ping) do |f| %>
+  <% if @ping.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ping.errors.count, "error") %> prohibited this ping from being saved:</h2>
+
+      <ul>
+      <% @ping.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :frequency %><br>
+    <%= f.select(:frequency, Ping.acceptableFrequencies) %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.select(:type, Pointer.acceptableTypes) %>
+  </div>
+  
+  <%= f.fields_for(:contactping) do |ff| %>
+    <div class="field">
+      <%= ff.label :contact_id %><br>
+      <%= ff.collection_select(:contact_id, @contacts, :id, :name) %>
+    </div>
+  <%end%>
+  
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

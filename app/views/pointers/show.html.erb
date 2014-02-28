@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @pointer.type %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @pointer.value %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @pointer.contact_id %>
+</p>
+
+<%= link_to 'Edit', edit_pointer_path(@pointer) %> |
+<%= link_to 'Back', pointers_path %>

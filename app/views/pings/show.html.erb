@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Frequency:</strong>
+  <%= @ping.frequency %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @ping.type %>
+</p>
+
+<p>
+  <strong>Lastrun:</strong>
+  <%= @ping.lastRun %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @ping.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_ping_path(@ping) %> |
+<%= link_to 'Back', pings_path %>

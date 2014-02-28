@@ -1,0 +1,33 @@
+<h1>Listing pings for <%= @user.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Frequency</th>
+      <th>Type</th>
+      <th>Lastrun</th>
+      <th>User</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pings.each do |ping| %>
+      <tr>
+        <td><%= ping.frequency %></td>
+        <td><%= ping.type %></td>
+        <td><%= ping.lastRun %></td>
+        <td><%= ping.user_id %></td>
+        <td><%= link_to 'Show', ping %></td>
+        <td><%= link_to 'Edit', edit_ping_path(ping) %></td>
+        <td><%= link_to 'Destroy', ping, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ping', new_ping_path %>

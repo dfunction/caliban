@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>Caliban</title>
+	<script type="text/javascript">
+	  (function() {
+	   var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	   po.src = 'https://apis.google.com/js/client:plusone.js';
+	   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	 })();
+	</script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		(function() {
+			$.ajaxSetup({
+			  headers: {
+				'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+			  }
+			});
+		})();
+		function signinCallback(authResult) {
+		  if (authResult['status']['signed_in']) {
+			// Update the app to reflect a signed in user
+			// Hide the sign-in button now that the user is authorized, for example:
+			document.getElementById('signinButton').setAttribute('style', 'display: none');
+			gapi.client.request({path: "/plus/v1/people/me", method:"get", callback: signIn})
+		  } else {
+			// Update the app to reflect a signed out user
+			// Possible error values:
+			//   "user_signed_out" - User is signed-out
+			//   "access_denied" - User denied access to your app
+			//   "immediate_failed" - Could not automatically log in the user
+			console.log('Sign-in state: ' + authResult['error']);
+			console.log(authResult);
+		  }
+		}
+		
+		function signIn(data) {
+			var email;
+			for (var i = 0; i < data.emails.length; i++) {
+				if (data.emails[i].type == "account") {
+					email = data.emails[i].value;
+					break;
+				}
+			}
+			
+			if (!email) {
+				console.error("Error: No Valid Email!");
+			}
+			
+			var name = data.name.givenName;
+			var id = data.id;
+			
+			$.post("/users",{user: {name: name, email: email, eid: id}}, handleSignIn, "json")
+			console.log({user: {name: name, email: email, eid: id}});
+		}
+		
+		function handleSignIn(data) {
+			if (data.result == "success") {
+				window.location.href = "/users/" + data.payload.id;
+			}
+			else {
+				console.log(data);
+			}
+		}
+	</script>
+</head>
+<body>
+	<span id="signinButton">
+	  <span
+		class="g-signin"
+		data-callback="signinCallback"
+		data-clientid="156721159883-h971m6pid1ec44dlbhk6e5jp8rbkrqjr.apps.googleusercontent.com"
+		data-cookiepolicy="single_host_origin"
+		data-scope="https://www.googleapis.com/auth/userinfo.email">
+	  </span>
+	</span>
+</body>
+</html>
