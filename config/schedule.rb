@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-job_type :go,  "cd :path && script/rails runner -e 'development' ':task' :output"
+job_type :go,  "cd :path && bin/rails runner -e 'development' ':task' :output"
 
 every 1.day, at: '3:00 pm' do
 	go "Application.sendReminders"
