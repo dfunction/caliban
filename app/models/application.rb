@@ -4,28 +4,30 @@ class Application
 			user.pings.each do |ping|
 				if String(ping.type) == "phoneNumber" && shouldCall(ping)
 					number_to_send_to = user.phoneNumber
-					
+
 					twilio_sid = "AC1a057c4ef9b61bfea3ae563095517e74"
 					twilio_token = "8ba03065b764623ef90b5e301a1c89b8"
 					twilio_phone_number = "3142660506"
-					
+
 					@twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
-					
-					if (@twilio_client.account.sms.messages.create(
-						:from => "+1#{twilio_phone_number}",
-						:to => number_to_send_to,
-						:body => "#{user.name}, call #{ping.contact.name} @ #{ping.contact.pointer.value}"
-					))
-						ping.update(lastRun: Time.now.utc)
+
+					suppress(Exception) do
+						if (@twilio_client.account.sms.messages.create(
+							:from => "+1#{twilio_phone_number}",
+							:to => number_to_send_to,
+							:body => "#{user.name}, call #{ping.contact.name} @ #{ping.contact.pointer.value}"
+						))
+							ping.update(lastRun: Time.now.utc)
+						end
 					end
 				end
 			end
 		end
 	end
-	
+
 	def self.shouldCall(ping)
 		@lastRun = ping.lastRun ? ping.lastRun : ping.created_at
-						
+
 		case ping.frequency
 		when "daily"
 			@offset = 24 * 60 * 60
@@ -39,8 +41,8 @@ class Application
 			ping.destroy
 			return false
 		end
-		
-		@nextRun = @lastRun + @offset		
+
+		@nextRun = @lastRun + @offset
 		@currentDate = Time.now.utc
 
 		if (@nextRun.year <= @currentDate.year &&
@@ -49,6 +51,6 @@ class Application
 			return true
 		else
 			return false
-		end		
+		end
 	end
 end
