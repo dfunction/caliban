@@ -33,7 +33,7 @@
 			console.log(authResult);
 		  }
 		}
-		
+
 		function signIn(data) {
 			var email;
 			for (var i = 0; i < data.emails.length; i++) {
@@ -42,18 +42,18 @@
 					break;
 				}
 			}
-			
+
 			if (!email) {
 				console.error("Error: No Valid Email!");
 			}
-			
+
 			var name = data.name.givenName;
 			var id = data.id;
-			
+
 			$.post("/users",{user: {name: name, email: email, eid: id}}, handleSignIn, "json")
 			console.log({user: {name: name, email: email, eid: id}});
 		}
-		
+
 		function handleSignIn(data) {
 			if (data.result == "success") {
 				window.location.href = "/users/" + data.payload.id;
@@ -69,7 +69,7 @@
 	  <span
 		class="g-signin"
 		data-callback="signinCallback"
-		data-clientid="156721159883-h971m6pid1ec44dlbhk6e5jp8rbkrqjr.apps.googleusercontent.com"
+		data-clientid="156721159883-gh137an8qrq1pd6m65jepbqfi7c3r17c.apps.googleusercontent.com"
 		data-cookiepolicy="single_host_origin"
 		data-scope="https://www.googleapis.com/auth/userinfo.email">
 	  </span>

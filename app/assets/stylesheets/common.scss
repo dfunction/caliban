@@ -1,0 +1,207 @@
+
+// SASS for most views
+// dependencies: web-fonts.scss
+
+// Google Web Fonts
+@import 'web-fonts';
+@include web-font((Montserrat, Open Sans), (400 b, 400 b)); // http://rosspenman.com/sass-web-fonts/
+@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville:400italic);
+
+// Variables
+
+$dingodile: #e13f2c;	// red
+$ms-ladybug: #ec6838;	// light-red
+$lucidity: #0d314a;	// dark-blue
+$heavens-gate: #c6dceb;	// light-blue on dark
+$envidia: #ecf3f8;	// light-blue on light
+
+$logo-1: $ms-ladybug;
+$logo-2: $dingodile;
+$bg-light: #fff;
+$bg-dark: $lucidity;
+$text-light: $heavens-gate;
+$text-dark: $lucidity;
+$text-accent: $dingodile;
+
+// Mixins
+
+@mixin size ($width: 100px, $height: 100px) {
+	width: $width;
+	height: $height;
+}
+
+@mixin border-radius ($radius: 4px) {
+	border-radius			: $radius;
+	-moz-border-radius		: $radius;
+	-webkit-border-radius	: $radius;
+}
+
+@mixin gradient-horizontal ($firstColor: #FFF, $secondColor: #DDD) {
+	background	: $firstColor; /* Fallback solid color for old browsers */
+	background	: linear-gradient(to right, $firstColor 0%, $secondColor 100%); /* W3C */
+	background	: -moz-linear-gradient(left,  $firstColor 0%, $secondColor 100%); /* FF 3.6+ */
+	background	: -ms-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* IE 10+ */
+	background	: -o-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* Opera 11.10+ */
+	background	: -webkit-linear-gradient(left,  $firstColor 0%,$secondColor 100%); /* Chrome 10+, Safari 5.1+ */
+	background	: -webkit-gradient(linear, left top, right top, color-stop(0%,$firstColor), color-stop(100%,$secondColor)); /* Chrome, Safari 4+ */
+	filter		: progid:DXImageTransform.Microsoft.gradient(startColorstr= '#{$firstColor}', endColorstr= '#{$secondColor}', GradientType=1); /* IE 6-9 */
+}
+
+// users/show.html.erb
+
+html, body {
+	@include size(100%, 100%);
+	display: block;
+	background: $bg-dark;
+}
+
+* {
+	-webkit-font-smoothing: antialiased;
+}
+
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.container {
+	@include size(100%, 100%);
+	display: block;
+	background: $bg-light;
+	color: $text-light;
+	font-family: 'Open Sans';
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.sidebar {
+	$sidebar-width: 200px;
+	@include size($sidebar-width, 100%);
+	display: inline-block;
+	overflow: hidden;
+	float: left;
+	background: $bg-dark;
+
+	.logo {
+		@include size(100%, 100px);
+		display: block;
+		@include gradient-horizontal($logo-1, $logo-2);
+
+		color: white;
+		font-family: 'Montserrat';
+		font-size: 24px;
+		font-weight: 400;
+		text-transform: uppercase;
+
+		line-height: 100px;
+		text-align: center;
+	}
+
+	.sidebar-user-pic {
+		@include size(120px, 120px);
+		@include border-radius(100%);
+		margin: 40px auto 25px auto;
+		overflow: hidden;
+	}
+
+	.sidebar-user-info {
+		text-align: center;
+		margin-bottom: 40px;
+
+		.sidebar-user-info-detail {
+			font-size: 14px;
+		}
+
+		.name {
+			font-size: 16px;
+			font-weight: bold;
+		}
+	}
+
+	.sidebar-btns {
+		.sidebar-btn {
+			$btn-height: 37px;
+			@include size(100%, $btn-height);
+			display: block;
+			font-family: 'Montserrat';
+			font-size: 14px;
+			text-transform: uppercase;
+			text-align: center;
+			line-height: $btn-height;
+		}
+
+		.edit-btn {
+			margin-bottom: 1px;
+			background: $heavens-gate;
+			color: $text-dark;
+		}
+
+		.logout-btn {
+			background: $dingodile;
+			color: white;
+		}
+	}
+
+	.sidebar-track {
+		@include size($sidebar-width, auto);
+		display: block;
+		position: absolute;
+		bottom: 0;
+		padding-bottom: 20px;
+		font-weight: bold;
+
+		.track-row {
+			@include size(100%, auto);
+			font-size: 11px;
+			text-align: center;
+		}
+
+		.fraction {
+			$num-size: 36px;
+			line-height: $num-size;
+			padding: 20px;
+
+			div {
+				float: left;
+				line-height: $num-size;
+			}
+
+			.track-numer {
+				font-family: 'Libre Baskerville';
+				font-style: italic;
+				font-size: $num-size;
+				font-weight: 400;
+				color: $text-accent;
+			}
+
+			.track-slash {
+				float: right;
+				font-size: 24px;
+				font-weight: 400;
+			}
+
+			.track-denom {
+				float: right;
+				margin-left: 4px;
+				font-size: 12px;
+			}
+		}
+	}
+}
+
+.content {
+	@include size(85%, 100%);
+	float: left;
+	background: $bg-light;
+
+	.pings {
+		@include size(60%, 100%);
+		float: left;
+	}
+
+	.contacts {
+		@include size(40%, 100%);
+		float: left;
+	}
+}

@@ -1,24 +1,51 @@
-<p id="notice"><%= notice %></p>
+<!-- container -->
+<div class="container">
+    <!--<div id="notice"><%= notice %></div>-->
 
-<p>
-  <strong>Eid:</strong>
-  <%= @user.eid %>
-</p>
+    <!-- sidebar -->
+    <div class="container-col sidebar">
+        <!-- logo -->
+        <div class="sidebar-row logo">
+            Caliban
+        </div><!-- /logo -->
+        <!-- sidebar-user -->
+        <div class="sidebar-row sidebar-user">
+            <div class="sidebar-user-pic">
+                <img src="https://lh4.googleusercontent.com/-ahKn5btFPO4/AAAAAAAAAAI/AAAAAAAAAAA/bPdKsRGJSpc/s120-c/photo.jpg" />
+            </div>
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-info-detail name"><%= @user.name %></div>
+                <div class="sidebar-user-info-detail"><%= @user.phoneNumber %></div>
+                <div class="sidebar-user-info-detail"><%= @user.email %></div>
+            </div>
+        </div><!-- /sidebar-user -->
+        <!-- sidebar-btns -->
+        <div class="sidebar-row sidebar-btns">
+            <div class="sidebar-btn edit-btn">edit account</div>
+            <div class="sidebar-btn logout-btn">logout</div>
+        </div><!-- /sidebar-btns -->
+        <!-- sidebar-track -->
+        <div class="sidebar-row sidebar-track">
+            <div class="track-row header">&mdash; keeping in touch with &mdash;</div>
+            <div class="track-row fraction">
+                <div class="track-numer">025</div>
+                <div class="track-denom">147 contacts</div>
+                <div class="track-slash">/</div>
+            </div>
+        </div><!-- /sidebar-track -->
+    </div><!-- /sidebar -->
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+    <!-- content -->
+    <div class="container-row content">
+        <!-- pings -->
+        <div class="content-col pings">
+            Pings
+        </div><!-- /pings -->
 
-<p>
-  <strong>Phonenumber:</strong>
-  <%= @user.phoneNumber %>
-</p>
+        <!-- contacts -->
+        <div class="content-col contacts">
+            Contacts
+        </div><!-- /contacts -->
+    </div><!-- /content -->
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+</div><!-- /container -->
