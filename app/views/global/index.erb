@@ -49,9 +49,10 @@
 
 			var name = data.name.givenName;
 			var id = data.id;
+			var imageURL = data.image.url.replace("sz=50","sz=120");
 
-			$.post("/users",{user: {name: name, email: email, eid: id}}, handleSignIn, "json")
-			console.log({user: {name: name, email: email, eid: id}});
+			$.post("/users",{user: {name: name, email: email, eid: id, imageURL: imageURL}}, handleSignIn, "json")
+			console.log({user: {name: name, email: email, eid: id, imageURL: imageURL}});
 		}
 
 		function handleSignIn(data) {

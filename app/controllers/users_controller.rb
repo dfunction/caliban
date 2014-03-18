@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @dbUser = User.where(:eid => params[:user][:eid], :email => params[:user][:email]).first
     if @dbUser.blank?
       @user = User.new(user_params)
-      
+
       respond_to do |format|
         if @user.save
           format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -38,6 +38,7 @@ class UsersController < ApplicationController
         end
       end
     else
+      @dbUser.update(user_params)
       session[:id] = @dbUser.id
       respond_to do |format|
         format.json {render json: {result: "success", payload: {id: @dbUser.id}}}
@@ -82,6 +83,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:eid, :name, :phoneNumber, :email)
+      params.require(:user).permit(:eid, :name, :phoneNumber, :email, :imageURL)
     end
 end
