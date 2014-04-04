@@ -4,24 +4,44 @@
 
 // Google Web Fonts
 @import 'web-fonts';
-@include web-font((Montserrat, Open Sans), (400 b, 400 b)); // http://rosspenman.com/sass-web-fonts/
-@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville:400italic);
+@include web-font((Montserrat, Open Sans), (400 b, 400 b 600)); // http://rosspenman.com/sass-web-fonts/
+@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville:700italic);
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.eot?v=4.0.3');
+  src: url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 // Variables
 
+// Colors
 $dingodile: #e13f2c;	// red
 $ms-ladybug: #ec6838;	// light-red
 $lucidity: #0d314a;	// dark-blue
 $heavens-gate: #c6dceb;	// light-blue on dark
 $envidia: #ecf3f8;	// light-blue on light
-
+$antique-blue: #6a879b; // gray blue on light
+// logo
 $logo-1: $ms-ladybug;
 $logo-2: $dingodile;
+// div bgs
 $bg-light: #fff;
 $bg-dark: $lucidity;
+$bg-on-light: $envidia;
+$bg-sep: $heavens-gate;
+// text-colors
 $text-light: $heavens-gate;
 $text-dark: $lucidity;
 $text-accent: $dingodile;
+$text-subtle: $antique-blue;
+// btn bgs
+$bg-danger: $dingodile;
+$bg-info: $heavens-gate;
+
+// Sizes
+$logo-height: 100px;
 
 // Mixins
 
@@ -37,14 +57,22 @@ $text-accent: $dingodile;
 }
 
 @mixin gradient-horizontal ($firstColor: #FFF, $secondColor: #DDD) {
-	background	: $firstColor; /* Fallback solid color for old browsers */
-	background	: linear-gradient(to right, $firstColor 0%, $secondColor 100%); /* W3C */
-	background	: -moz-linear-gradient(left,  $firstColor 0%, $secondColor 100%); /* FF 3.6+ */
-	background	: -ms-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* IE 10+ */
-	background	: -o-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* Opera 11.10+ */
-	background	: -webkit-linear-gradient(left,  $firstColor 0%,$secondColor 100%); /* Chrome 10+, Safari 5.1+ */
-	background	: -webkit-gradient(linear, left top, right top, color-stop(0%,$firstColor), color-stop(100%,$secondColor)); /* Chrome, Safari 4+ */
-	filter		: progid:DXImageTransform.Microsoft.gradient(startColorstr= '#{$firstColor}', endColorstr= '#{$secondColor}', GradientType=1); /* IE 6-9 */
+	background : $firstColor; /* Fallback solid color for old browsers */
+	background : linear-gradient(to right, $firstColor 0%, $secondColor 100%); /* W3C */
+	background : -moz-linear-gradient(left,  $firstColor 0%, $secondColor 100%); /* FF 3.6+ */
+	background : -ms-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* IE 10+ */
+	background : -o-linear-gradient(left, $firstColor 0%, $secondColor 100%); /* Opera 11.10+ */
+	background : -webkit-linear-gradient(left,  $firstColor 0%,$secondColor 100%); /* Chrome 10+, Safari 5.1+ */
+	background : -webkit-gradient(linear, left top, right top, color-stop(0%,$firstColor), color-stop(100%,$secondColor)); /* Chrome, Safari 4+ */
+	filter : progid:DXImageTransform.Microsoft.gradient(startColorstr= '#{$firstColor}', endColorstr= '#{$secondColor}', GradientType=1); /* IE 6-9 */
+}
+
+@mixin fa {
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 // users/show.html.erb
@@ -65,11 +93,27 @@ html, body {
 	box-sizing: border-box;
 }
 
+.fa-bell:before {
+	@include fa;
+	content: "\f0a2";
+}
+
+.fa-users:before {
+	@include fa;
+	content: "\f0c0";
+}
+
+.fa-plus:before {
+	@include fa;
+  content: "\f055";
+}
+
 .container {
 	@include size(100%, 100%);
 	display: block;
+	position: relative;
 	background: $bg-light;
-	color: $text-light;
+	color: $text-dark;
 	font-family: 'Open Sans';
 	font-size: 16px;
 	font-weight: 400;
@@ -79,12 +123,14 @@ html, body {
 	$sidebar-width: 200px;
 	@include size($sidebar-width, 100%);
 	display: inline-block;
+	position: relative;
 	overflow: hidden;
 	float: left;
 	background: $bg-dark;
+	color: $text-light;
 
 	.logo {
-		@include size(100%, 100px);
+		@include size(100%, $logo-height);
 		display: block;
 		@include gradient-horizontal($logo-1, $logo-2);
 
@@ -94,7 +140,7 @@ html, body {
 		font-weight: 400;
 		text-transform: uppercase;
 
-		line-height: 100px;
+		line-height: $logo-height;
 		text-align: center;
 	}
 
@@ -133,12 +179,12 @@ html, body {
 
 		.edit-btn {
 			margin-bottom: 1px;
-			background: $heavens-gate;
+			background: $bg-info;
 			color: $text-dark;
 		}
 
 		.logout-btn {
-			background: $dingodile;
+			background: $bg-danger;
 			color: white;
 		}
 	}
@@ -191,17 +237,137 @@ html, body {
 }
 
 .content {
-	@include size(85%, 100%);
-	float: left;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
 	background: $bg-light;
 
-	.pings {
-		@include size(60%, 100%);
-		float: left;
+	.content-sep {
+			content: "";
+			float: left;
+			height: 75%;
+			width: 1px;
+			background: red;
+			margin-top: $logo-height + 42px;
+			border-right: 1px solid $bg-sep;
 	}
 
-	.contacts {
-		@include size(40%, 100%);
+	.content-col {
 		float: left;
+		position: relative;
+		height: 100%;
+		overflow: hidden;	// TODO
+		//margin-bottom: -9000px;
+
+		&.pings {
+			@include size(60%, 100%);
+		}
+
+		&.contacts {
+			@include size(39%, 100%);
+		}
+
+		.content-col-head {
+			$icon-size-lg: 72px;
+			$height: $logo-height + 10px;
+			display: block;
+			position: relative;
+			padding: 5px 0 5px 0;
+			margin: 0 auto;
+			background: $bg-light;
+			text-align: center;
+			line-height: $height;
+
+			.fa-bell {
+				color: $text-accent;
+				font-size: $icon-size-lg;
+			}
+
+			.fa-users {
+				color: $text-accent;
+				font-size: $icon-size-lg;
+			}
+		}
+
+		.list-create {
+			background: $bg-on-light;
+			cursor: pointer;
+
+			&.pings-pad {
+				margin: 0 60px 0 60px;
+			}
+
+			&.contacts-pad {
+				margin: 0 30px 0 30px;
+			}
+
+			.create-btn {
+				font-family: Libre Baskerville;
+				font-style: italic;
+				font-weight: 700; // or 700?
+
+				&.pings-create-btn {
+					padding: 30px 36px;
+					font-size: 32px;
+				}
+
+				&.contacts-create-btn {
+					padding: 22px 28px;
+					font-size: 24px;
+				}
+
+				.fa-plus {
+					margin-right: 16px;
+					color: $text-accent;
+				}
+			}
+		}
+
+		.list {
+			height: 100%;
+			overflow-x: hidden;
+			overflow-y: auto;
+
+			&.pings-list {
+				font-size: 28px;
+				padding: 0 60px 0 60px;
+
+				li {
+					$pad-top: 14px;
+					padding: $pad-top 0 $pad-top 36px;
+
+					&:nth-of-type(1) {
+						padding-top: 2 * $pad-top;
+					}
+
+					&:last-of-type {
+						padding-bottom: 2 * $pad-top;
+					}
+				}
+			}
+
+			&.contacts-list {
+				color: $text-subtle;
+				font-size: 20px;
+				padding: 0 30px 0 30px;
+
+				li {
+					$pad-top: 12px;
+					padding: $pad-top 0 $pad-top 28px;
+
+					&:nth-of-type(1) {
+						padding-top: 2 * $pad-top;
+					}
+
+					&:last-of-type {
+						padding-bottom: 2 * $pad-top;
+					}
+				}
+			}
+
+			b {
+				font-weight: 600;
+			}
+		}
 	}
 }
